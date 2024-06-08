@@ -9,4 +9,5 @@ public interface RecordManagerService {
     RecordData getAlbumById(Long id);
     RecordData postAlbum(RecordData recordData);
     RecordData updateAlbum(long id, RecordData recordData);
+    String deleteAlbum(long id);
 }

@@ -42,7 +42,18 @@ public class RecordManagerController {
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity <String> deleteAlbum(@PathVariable long id){
+        String albumToDelete= recordManagerService.deleteAlbum(id);
 
+        if (albumToDelete != null){
+            return new ResponseEntity<>(albumToDelete,HttpStatus.OK);
+        }
+        else {
+            String message= "Album id:" + id + " not found try again!";
+            return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 

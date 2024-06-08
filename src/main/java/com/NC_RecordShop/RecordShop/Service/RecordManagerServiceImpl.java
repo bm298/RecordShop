@@ -49,7 +49,14 @@ public class RecordManagerServiceImpl implements RecordManagerService{
         return recordManagerRepository.save(albumToUpdate);
     }
 
-
+    @Override
+    public String deleteAlbum(long id) {
+        if (recordManagerRepository.existsById(id)){
+            recordManagerRepository.deleteById(id);
+            return "book with id:" + id+" has been deleted";
+        }
+        return null;
+    }
 
 
 }
