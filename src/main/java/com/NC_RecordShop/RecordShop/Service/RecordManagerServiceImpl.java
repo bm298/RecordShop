@@ -24,7 +24,7 @@ public class RecordManagerServiceImpl implements RecordManagerService{
     }
 
     @Override
-    public RecordData getAlbumById(Long id) {
+    public RecordData getAlbumById(long id) {
         return recordManagerRepository.findById(id).orElse(null);
     }
 
@@ -56,6 +56,26 @@ public class RecordManagerServiceImpl implements RecordManagerService{
             return "book with id:" + id+" has been deleted";
         }
         return null;
+    }
+
+    @Override
+    public List<RecordData> getAlbumsByArtist(String artist) {
+        return recordManagerRepository.findAlbumByArtist(artist);
+    }
+
+    @Override
+    public List<RecordData> getAlbumsByReleaseYear(long releaseYear) {
+        return recordManagerRepository.findAlbumByReleaseYear(releaseYear);
+    }
+
+    @Override
+    public List<RecordData> getAlbumsByGenre(Genre genre) {
+        return recordManagerRepository.findAlbumByGenre(genre);
+    }
+
+    @Override
+    public RecordData getAlbumByAlbumName(String albumName) {
+        return recordManagerRepository.findAlbumByAlbumName(albumName);
     }
 
 

@@ -1,5 +1,6 @@
 package com.NC_RecordShop.RecordShop.Controller;
 
+import com.NC_RecordShop.RecordShop.Model.Genre;
 import com.NC_RecordShop.RecordShop.Model.RecordData;
 import com.NC_RecordShop.RecordShop.Service.RecordManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,37 @@ public class RecordManagerController {
             String message= "Album id:" + id + " not found try again!";
             return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
         }
+
     }
+
+    @GetMapping("/artistName")
+    public ResponseEntity<List<RecordData>> getAlbumsByArtist(@RequestParam String artistName){
+    List<RecordData> listOfalbums= recordManagerService.getAlbumsByArtist(artistName);
+
+    return new ResponseEntity<>(listOfalbums, HttpStatus.OK);
+    }
+
+    @GetMapping("/releaseYear")
+    public ResponseEntity<List<RecordData>> getAlbumsByreleaseYear(@RequestParam long releaseYear){
+        List<RecordData> listOfalbums= recordManagerService.getAlbumsByReleaseYear(releaseYear);
+
+        return new ResponseEntity<>(listOfalbums, HttpStatus.OK);
+    }
+
+    @GetMapping("/genre")
+    public ResponseEntity<List<RecordData>> getAlbumsByGenre(@RequestParam Genre genre){
+        List<RecordData> listOfalbums= recordManagerService.getAlbumsByGenre(genre);
+
+        return new ResponseEntity<>(listOfalbums, HttpStatus.OK);
+    }
+
+    @GetMapping("/albumName")
+    public ResponseEntity<RecordData> getAlbumByAlbumName(@RequestParam String albumName){
+        RecordData album= recordManagerService.getAlbumByAlbumName(albumName);
+
+        return new ResponseEntity<>(album, HttpStatus.OK);
+    }
+
 
 
 
