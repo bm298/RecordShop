@@ -84,10 +84,9 @@ class RecordManagerControllerTest {
 
     @Test
     public void testPostAlbum() throws Exception {
-        RecordData newAlbum = new RecordData(null, "New Album", "New Artist", 2023, 5, Genre.ROCK);
-        RecordData createdAlbum = new RecordData(1L, "New Album", "New Artist", 2023, 5, Genre.ROCK);
+        RecordData newAlbum = new RecordData(1L, "New Album", "New Artist", 2023, 5, Genre.ROCK);
 
-        when(mockRecordManagerServiceImpl.postAlbum(newAlbum)).thenReturn(createdAlbum);
+        when(mockRecordManagerServiceImpl.postAlbum(newAlbum)).thenReturn(newAlbum);
 
         mockMvcController.perform(
                         MockMvcRequestBuilders.post("/api/v1/recordShop")
