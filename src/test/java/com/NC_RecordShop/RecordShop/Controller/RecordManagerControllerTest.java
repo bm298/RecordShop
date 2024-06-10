@@ -99,5 +99,62 @@ class RecordManagerControllerTest {
 
     }
 
+    @Test
+    public void testGetAlbumByArtistName() throws Exception {
+
+        List<RecordData> albums = new ArrayList<>();
+        albums.add(new RecordData(1L, "Get rich or die trying", "50 cent", 2004, 10, Genre.RAP)) ;
+        albums.add(new RecordData(2L, "The Massacre", "50 cent", 2005, 8, Genre.RAP));
+
+        when(mockRecordManagerServiceImpl.getAlbumsByArtist("50 cent")).thenReturn(albums);
+
+        mockMvcController.perform(
+                MockMvcRequestBuilders.get("/api/v1/recordShop/artistName").param("artistName", "50 cent"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].albumName").value("Get rich or die trying"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].albumName").value("The Massacre"));
+    }
+
+    @Test
+    public void testGetAlbumsByReleaseYear() throws Exception {
+        List<RecordData> albums = new ArrayList<>();
+        albums.add(new RecordData(1L, "Get rich or die trying", "50 cent", 2004, 10, Genre.RAP)) ;
+        albums.add(new RecordData(2L, "The Massacre", "50 cent", 2005, 8, Genre.RAP));
+        albums.add(new RecordData(3L, "Discovery", "the game", 2005, 11, Genre.RAP)) ;
+
+        when(mockRecordManagerServiceImpl.getAlbumsByReleaseYear(2005)).thenReturn(albums);
+
+        mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/recordShop/releaseYear")
+                        .param("releaseYear", "2005"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].releaseYear").value(2005))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].releaseYear").value(2005));
+    }
+
+    @Test
+    public void testGetAlbumsByGenre() throws Exception {
+        List<RecordData> albums = new ArrayList<>();
+        albums.add(new RecordData(1L, "Get rich or die trying", "50 cent", 2004, 10, Genre.RAP)) ;
+        albums.add(new RecordData(1L, "Thriller", "Michael Jackson", 1982, 10, Genre.POP));
+
+        when(mockRecordManagerServiceImpl.getAlbumsByGenre(Genre.POP)).thenReturn(albums);
+        mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/recordShop/genre")
+                        .param("genre", "POP"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].albumName").value("Thriller"));
+    }
+
+    @Test
+    public void testGetAlbumByAlbumName() throws Exception {
+        RecordData album = new RecordData(1L, "Thriller", "Michael Jackson", 1982, 10, Genre.POP);
+
+        when(mockRecordManagerServiceImpl.getAlbumByAlbumName("Thriller")).thenReturn(album);
+
+        mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/recordShop/albumName")
+                        .param("albumName", "Thriller"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Thriller"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.artist").value("Michael Jackson"));
+    }
 
 }
