@@ -2,8 +2,12 @@ package com.NC_RecordShop.RecordShop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableCaching
+@EnableScheduling
 public class RecordShopApplication {
 
 	public static void main(String[] args) {
@@ -11,3 +15,4 @@ public class RecordShopApplication {
 	}
 
 }
+

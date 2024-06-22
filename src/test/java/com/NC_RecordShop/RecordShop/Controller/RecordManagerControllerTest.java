@@ -74,7 +74,7 @@ class RecordManagerControllerTest {
         mockMvcController.perform(
                         MockMvcRequestBuilders.get("/api/v1/recordShop/{id}", album.getId()))
 //                            The param that you passed in to your actual function needs to be here ^^^^
-                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(album.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Get rich or die trying"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.artist").value("50 Cent"))
@@ -135,7 +135,7 @@ class RecordManagerControllerTest {
     public void testGetAlbumsByGenre() throws Exception {
         List<RecordData> albums = new ArrayList<>();
         albums.add(new RecordData(1L, "Get rich or die trying", "50 cent", 2004, 10, Genre.RAP)) ;
-        albums.add(new RecordData(1L, "Thriller", "Michael Jackson", 1982, 10, Genre.POP));
+        albums.add(new RecordData(2L, "Thriller", "Michael Jackson", 1982, 10, Genre.POP));
 
         when(mockRecordManagerServiceImpl.getAlbumsByGenre(Genre.POP)).thenReturn(albums);
         mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/recordShop/genre")
